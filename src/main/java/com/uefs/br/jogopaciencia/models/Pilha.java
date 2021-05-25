@@ -3,7 +3,6 @@ package com.uefs.br.jogopaciencia.models;
 import java.util.ArrayList;
 import java.util.Stack;
 
-import com.uefs.br.jogopaciencia.interfaces.ObserverJogada;
 import com.uefs.br.jogopaciencia.interfaces.RegraAdicao;
 
 public class Pilha {
@@ -11,11 +10,9 @@ public class Pilha {
 	private int numero;
 	private RegraAdicao regraAdicao;
 	private String nome;
-	private ArrayList<ObserverJogada> observadoresJogada;
 
 	public Pilha() {
 		cartas = new Stack<NoCarta>();
-		observadoresJogada = new ArrayList<>(); 
 	}
 	
 
@@ -23,14 +20,12 @@ public class Pilha {
 		this.numero = numero;
 		this.nome = nome;
 		cartas = new Stack<NoCarta>();
-		observadoresJogada = new ArrayList<>(); 
 	}
 
 	public Pilha(int numero, RegraAdicao eventoAdicao) {
 		this.numero = numero;
 		this.regraAdicao = eventoAdicao;
 		cartas = new Stack<NoCarta>();
-		observadoresJogada = new ArrayList<>(); 
 	}
 
 	/**
@@ -51,7 +46,6 @@ public class Pilha {
 		}
 		
 		cartas.push(novaCarta);
-		notificarObservadores();
 	}
 
 	public void adicionarCarta(int index, NoCarta carta)  {
@@ -82,8 +76,6 @@ public class Pilha {
 
 		NoCarta cartaDesempilhada = cartas.pop();
 		
-		notificarObservadores();
-		
 		return cartaDesempilhada;
 	}
 
@@ -110,14 +102,6 @@ public class Pilha {
 		}
 	}
 	
-	public void adicionarObervador(ObserverJogada obervador) {
-		observadoresJogada.add(obervador);
-	}
-	
-	private void notificarObservadores() {
-		for(ObserverJogada observador : observadoresJogada)
-			observador.notificarJogadaRealizada();
-	}
 	
 	public Stack<NoCarta> getCartas(){
 		return cartas;

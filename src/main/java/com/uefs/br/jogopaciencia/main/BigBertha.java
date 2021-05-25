@@ -158,6 +158,8 @@ public class BigBertha extends JFrame {
 						
 						jogo.moverCarta(pilhaOrigem, pilhaDestino);
 						proximoMovimento.resetar();
+						pilhasGUI[pilhaOrigem - 1].atualizarExibicao();;
+						pilhasGUI[pilhaDestino - 1].atualizarExibicao();
 					} 
 					catch (Exception e) {
 						exibirMensagem(e.getMessage());

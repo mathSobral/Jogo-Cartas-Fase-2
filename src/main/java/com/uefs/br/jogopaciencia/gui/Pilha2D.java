@@ -74,7 +74,6 @@ public class Pilha2D extends JPanel {
 
 	public void setPilha(Pilha pilha) {
 		this.pilha = pilha;
-		pilha.adicionarObervador(() -> {atualizarExibicao();});
 		atualizarExibicao();
 	}
 
