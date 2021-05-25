@@ -1,14 +1,15 @@
 package com.uefs.br.jogopaciencia.gui;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
-import com.uefs.br.jogopaciencia.interfaces.ObserverJogada;
 import com.uefs.br.jogopaciencia.models.NoCarta;
 import com.uefs.br.jogopaciencia.models.Pilha;
 
-public class PilhaGUI extends JPanel implements ObserverJogada{
+public class Pilha2D extends JPanel {
 	/**
 	 * 
 	 */
@@ -20,6 +21,8 @@ public class PilhaGUI extends JPanel implements ObserverJogada{
 	private int x;
 	private int y;
 	private Sprite spriteCartas;
+	private Selecao faixaSelecao;
+	private SelecaoEvento eventoSelecao;
 
 
 	/**
@@ -30,7 +33,7 @@ public class PilhaGUI extends JPanel implements ObserverJogada{
 	 * @param espacamentoVertical
 	 * @param sprite
 	 */
-	public PilhaGUI(int x, int y, int espacamentoHorizontal, int espacamentoVertical, Sprite sprite) {
+	public Pilha2D(int x, int y, int espacamentoHorizontal, int espacamentoVertical, Sprite sprite) {
 		this.espacamentoHorizontal = espacamentoHorizontal;
 		this.espacamentoVertical = espacamentoVertical;
 		this.x = x;
@@ -39,7 +42,16 @@ public class PilhaGUI extends JPanel implements ObserverJogada{
 		this.setBounds(x, y, 55, getAlturaDoPainel());
 		setLayout(null);
 		paineisDeCartas = new ArrayList<>();
-		this.setOpaque(false);
+		faixaSelecao = new Selecao();
+		setOpaque(false);
+		addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if(paineisDeCartas.isEmpty())
+					eventoSelecao.selecaoFeita(faixaSelecao, pilha);
+			}
+		});
+
 	}
 
 	private int getAlturaDoPainel() {
@@ -62,13 +74,10 @@ public class PilhaGUI extends JPanel implements ObserverJogada{
 
 	public void setPilha(Pilha pilha) {
 		this.pilha = pilha;
+		pilha.adicionarObervador(() -> {atualizarExibicao();});
 		atualizarExibicao();
 	}
 
-	@Override
-	public void notificarJogadaRealizada() {
-		atualizarExibicao();
-	}
 
 	public void atualizarExibicao() {
 		//TODO quando tiver 0 e 0 de offset, só renderizar a ultima carta
@@ -78,16 +87,26 @@ public class PilhaGUI extends JPanel implements ObserverJogada{
 			this.remove(painel);
 
 
-		paineisDeCartas = new ArrayList<>();
+		paineisDeCartas = new ArrayList<>(); //TODO nao instanciar, reaproveitar os panel que ja tao la
 
 		int x = 0;
 		int y = 0;
-		int indicePilha = 0;
+		int posicalDaCarta = 0;
 
 		for(NoCarta carta : pilha.getCartas()) {
-			ImagemPanel painelCarta = new ImagemPanel(spriteCartas.getImage(carta.getNaipeInteiro(), carta.getNumero() - 1));
-
-			boolean eUltima = (indicePilha++ == (pilha.tamanho() - 1));
+			ImagemPanel painelCarta = new ImagemPanel(spriteCartas.getImage(carta.getNaipeInteiro(), carta.getNumero() - 1), 
+													  spriteCartas.getImageSelecionado(carta.getNaipeInteiro(), carta.getNumero() - 1));
+			
+			boolean eUltima = (posicalDaCarta++ == (pilha.tamanho() - 1));
+			
+			painelCarta.setEstaSelecionado(false);
+			
+			painelCarta.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					cliqueCarta(painelCarta, carta);
+				}
+			});
 
 			if(espacamentoHorizontal == 0)
 				painelCarta.setBounds(x, y, Constantes.LARGURA_CARTA, eUltima ? (Constantes.ALTURA_CARTA) : espacamentoVertical);
@@ -103,5 +122,46 @@ public class PilhaGUI extends JPanel implements ObserverJogada{
 
 		this.repaint();
 	}
+	
+	private void cliqueCarta(ImagemPanel painelCarta, NoCarta carta){
+		faixaSelecao.adicionarIndice(pilha.getCartas().indexOf(carta));
+		
+		if(eventoSelecao != null)
+			eventoSelecao.selecaoFeita(faixaSelecao, pilha);
+		
+		if(faixaSelecao.possuiSelecao()) {
+			atualizarSelecaoPilha(faixaSelecao, true);
+		}
+		else
+			atualizarSelecaoPilha(faixaSelecao, false);
+	}
+	
+	public void resetarExibicao() {
+		faixaSelecao.resetar();
+		atualizarSelecaoPilha(faixaSelecao, false);
+	}
+	
+	private void atualizarSelecaoPilha(Selecao faixa, boolean valor) {
+		int inicio = 0;
+		int fim = paineisDeCartas.size() - 1;
+		
+		if(faixaSelecao.possuiSelecao()) {
+			inicio = faixaSelecao.getInicio();
+			
+			if(faixaSelecao.possuiFaixaSelecao()){
+				fim = paineisDeCartas.size() - 1;
+			}
+			else
+				fim = inicio;
+		}
 
+		for(int i = 0; i <= paineisDeCartas.size() - 1; i++) {
+			paineisDeCartas.get(i).setEstaSelecionado(valor && (i >= inicio && i <=fim));
+		}
+	}
+
+	public void setEventoSelecao(SelecaoEvento eventoSelecao) {
+		this.eventoSelecao = eventoSelecao;
+	}
+	
 }
