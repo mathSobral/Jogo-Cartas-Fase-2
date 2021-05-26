@@ -30,6 +30,12 @@ public class Movimento {
 		else {
 			if(numeroPilha != pilhaOrigem)
 				pilhaDestino = numeroPilha;
+			else {
+				if(quantidade == 1)
+					pilhaOrigem = 0;
+				else
+					this.quantidade = quantidade;
+			}
 		}
 	}
 

@@ -69,7 +69,7 @@ public class PacienciaBigBertha extends JogoStrategy {
 		Pilha pilhaFundacaoSoReis = new Pilha(FUNDACAO_9_REIS, "FUNDACAO (SO REIS)");
 		
 		pilhaFundacaoSoReis.setRegraAdicao((NoCarta cartaAnterior, NoCarta novaCarta) -> {
-			return cartaAnterior == null || novaCarta.eReis();
+			return novaCarta.eReis();
 		});
 		
 		pilhas[converterParaIndiceArray(FUNDACAO_9_REIS)] = pilhaFundacaoSoReis;
@@ -105,6 +105,14 @@ public class PacienciaBigBertha extends JogoStrategy {
 
 	}
 
+	@Override
+	public void moverCarta(int numPilhaOrigem, int quantidade, int numPilhaDestino) throws Exception{
+		if(numPilhaOrigem >= FUNDACAO_1 && numPilhaOrigem <= FUNDACAO_9_REIS)
+			throw new Exception("Nao e' permitido retornar a carta do topo das fundacoes para as fileiras");
+
+		super.moverCarta(numPilhaOrigem, quantidade, numPilhaDestino);
+	}
+	
 	@Override
 	public void moverCarta(int numPilhaOrigem, int numPilhaDestino) throws Exception{
 		if(numPilhaOrigem >= FUNDACAO_1 && numPilhaOrigem <= FUNDACAO_9_REIS)

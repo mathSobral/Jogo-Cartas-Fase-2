@@ -1,6 +1,6 @@
 package com.uefs.br.jogopaciencia.models;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 import com.uefs.br.jogopaciencia.interfaces.RegraAdicao;
@@ -128,6 +128,33 @@ public class Pilha {
 
 	public int quantidade() {
 		return cartas.size();
+	}
+
+
+	public List<NoCarta> getSubpilha(int quantidade) {
+		int fromIndex = cartas.size() - quantidade;
+		int toIndex = cartas.size();
+		return cartas.subList(fromIndex, toIndex);
+	}
+
+
+	public void adicionarSubpilha(List<NoCarta> subpilha) throws Exception {
+		if(subpilha.size() == 1) {
+			adicionarCarta(subpilha.get(0));
+			return;
+		}
+		
+		if(!regraAdicao.permitir(cartas.peek(), subpilha.get(0)))
+			throw new Exception("Movimento inválido. Insercao não permitida!!!");
+		
+		int indiceDaCarta = 0;
+		
+		for(NoCarta carta: subpilha.subList(1, subpilha.size()))
+				if(!regraAdicao.permitir(subpilha.get(indiceDaCarta++), carta))
+					throw new Exception("Movimento inválido. Insercao não permitida!!!");
+		
+		cartas.addAll(subpilha);
+		
 	}
 
 }

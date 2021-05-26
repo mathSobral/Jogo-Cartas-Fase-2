@@ -1,5 +1,7 @@
 package com.uefs.br.jogopaciencia.models;
 
+import java.util.List;
+
 public abstract class JogoStrategy {
 	protected Pilha pilhas[];
 	
@@ -11,10 +13,6 @@ public abstract class JogoStrategy {
 	 */
 	public abstract void novoJogo() throws Exception;
 	
-	public void virarCartas(int numeroCartas, int pilha) throws Exception{
-		//TODO
-	}
-
 	
 	public String pedirDadosCarta(int numPilha) throws Exception {
 		Pilha pilha = getPilha(numPilha);
@@ -37,6 +35,30 @@ public abstract class JogoStrategy {
 		pilhaDestino.adicionarCarta(pilhaOrigem.espiar());
 		
 		pilhaOrigem.desempilhar();
+	}
+	
+	public void moverCarta(int numPilhaOrigem, int quantidade, int numPilhaDestino) throws Exception {
+		if(numPilhaOrigem == numPilhaDestino)
+			throw new Exception("Devem ser informados numeros de pilha diferentes!");
+		
+		Pilha pilhaOrigem = getPilha(numPilhaOrigem);
+		Pilha pilhaDestino = getPilha(numPilhaDestino);
+		
+		List<NoCarta> subpilha = pilhaOrigem.getSubpilha(quantidade);
+		int tamanhoSubpilha = subpilha.size();
+		
+		try {
+			pilhaDestino.adicionarSubpilha(subpilha);
+			
+			for(int i = 0; i < tamanhoSubpilha; i++) 
+				pilhaOrigem.desempilhar();
+			
+		}
+		catch(Exception e) {
+			throw e;
+		}
+		
+
 	}
 	
 	public Pilha getPilha(int numPilha) throws Exception {

@@ -61,6 +61,6 @@ public class Selecao {
 		if(fim == inicio)
 			return 1;
 		
-		return inicio - fim;
+		return fim - inicio + 1 ;
 	}
 }

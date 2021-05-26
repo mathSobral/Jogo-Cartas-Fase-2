@@ -98,7 +98,7 @@ public class Paciencia {
 						int numPilhaOrigem = Console.readInt();
 						System.out.println("Informe o numero do local para onde deseja mover a carta: ");
 						int numPilhaDestino = Console.readInt();
-						jogo.moverCarta(numPilhaOrigem, numPilhaDestino);
+						jogo.moverCarta(numPilhaOrigem, 0, numPilhaDestino);
 					}else if(escolha == 2){
 						jogo.mostrarJogo();
 					}else if(escolha == 3){

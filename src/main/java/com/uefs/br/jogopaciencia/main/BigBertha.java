@@ -148,25 +148,35 @@ public class BigBertha extends JFrame {
 			@Override
 			public void selecaoFeita(Selecao selecao, Pilha pilha) {
 				proximoMovimento.adicionarPilha(pilha.getNumero(), selecao.getNumeroDeItensSelecionados());
+				
 				if(proximoMovimento.movimentoFormado()) {
 					try {
 						int pilhaOrigem = proximoMovimento.getPilhaOrigem();
+						int quantidade = proximoMovimento.getQuantidade();
 						int pilhaDestino = proximoMovimento.getPilhaDestino();
+						
+						System.out.println("Pilha origem: " + proximoMovimento.getPilhaOrigem() + " Qtd: " + proximoMovimento.getQuantidade() + " Pilha destino: " + proximoMovimento.getPilhaDestino());
+
+
+						proximoMovimento.resetar();
 						
 						pilhasGUI[pilhaOrigem - 1].resetarExibicao();
 						pilhasGUI[pilhaDestino - 1].resetarExibicao();
 						
-						jogo.moverCarta(pilhaOrigem, pilhaDestino);
-						proximoMovimento.resetar();
+						
+						if(quantidade > 1)
+							jogo.moverCarta(pilhaOrigem, quantidade, pilhaDestino);
+						else
+							jogo.moverCarta(pilhaOrigem, pilhaDestino);
+						
+						
 						pilhasGUI[pilhaOrigem - 1].atualizarExibicao();;
 						pilhasGUI[pilhaDestino - 1].atualizarExibicao();
 					} 
 					catch (Exception e) {
 						exibirMensagem(e.getMessage());
-						proximoMovimento.resetar();
 					}
 				}
-				System.out.println("Pilha origem: " + proximoMovimento.getPilhaOrigem() + " Qtd: " + proximoMovimento.getQuantidade() + " Pilha destino: " + proximoMovimento.getPilhaDestino());
 			}
 
 		});
