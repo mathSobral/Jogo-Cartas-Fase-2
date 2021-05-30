@@ -23,6 +23,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Color;
 
@@ -109,7 +110,7 @@ public class BigBertha extends JFrame {
 	}
 
 	private void instanciarEstoque(JogoStrategy jogo) throws Exception {
-		Pilha2D panel = new Pilha2D(73, 470, 5, 0, sprite);
+		Pilha2D panel = new Pilha2D(14, 50, 0, 25, sprite);
 		panel.setPilha(jogo.getPilha(PacienciaBigBertha.ESTOQUE));
 		contentPane.add(panel);
 		adicionarEventoSelecao(panel);
@@ -118,7 +119,7 @@ public class BigBertha extends JFrame {
 	}
 
 	private void instanciarFundacoes(JogoStrategy jogo) throws Exception {
-		int x = 223;
+		int x = 257;
 		int cursor = 1;
 		for(int i = PacienciaBigBertha.FUNDACAO_1; i <= PacienciaBigBertha.FUNDACAO_9_REIS; i++) {
 			Pilha2D panel = new Pilha2D(x, 50, 0, 0, sprite);
@@ -131,7 +132,7 @@ public class BigBertha extends JFrame {
 	}
 
 	private void instanciarFileiras(JogoStrategy jogo) throws Exception {
-		int x = 43;
+		int x = 79;
 		int cursor = 10;
 		for(int i = PacienciaBigBertha.FILEIRA_1; i <= PacienciaBigBertha.FILEIRA_14; i++) {
 			Pilha2D panel = new Pilha2D(x, 145, 0, 25, sprite);
@@ -154,9 +155,6 @@ public class BigBertha extends JFrame {
 						int pilhaOrigem = proximoMovimento.getPilhaOrigem();
 						int quantidade = proximoMovimento.getQuantidade();
 						int pilhaDestino = proximoMovimento.getPilhaDestino();
-						
-						System.out.println("Pilha origem: " + proximoMovimento.getPilhaOrigem() + " Qtd: " + proximoMovimento.getQuantidade() + " Pilha destino: " + proximoMovimento.getPilhaDestino());
-
 
 						proximoMovimento.resetar();
 						
@@ -213,6 +211,8 @@ public class BigBertha extends JFrame {
 			};
 			new javax.swing.Timer(delay, taskPerformer).start();
 		}
+		else 
+			JOptionPane.showMessageDialog(null,mensagem);  
 
 	}
 }

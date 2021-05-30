@@ -81,7 +81,6 @@ public class PacienciaBigBertha extends JogoStrategy {
 		for(int i = 0; i < 15; i++) {
 			Pilha pilhaFileira = new Pilha(FILEIRA_1 + i, "FILEIRA");
 
-
 			for(int j = 0; j < 6; j++)
 				pilhaFileira.adicionarCarta(baralho.retiraCartaTopo());
 

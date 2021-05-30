@@ -106,6 +106,8 @@ public class Pilha2D extends JPanel {
 					cliqueCarta(painelCarta, carta);
 				}
 			});
+			
+			
 
 			if(espacamentoHorizontal == 0)
 				painelCarta.setBounds(x, y, Constantes.LARGURA_CARTA, eUltima ? (Constantes.ALTURA_CARTA) : espacamentoVertical);
@@ -114,6 +116,8 @@ public class Pilha2D extends JPanel {
 
 			this.add(painelCarta);
 			this.paineisDeCartas.add(painelCarta);
+			
+			
 
 			x = espacamentoHorizontal > 0 ? (x + espacamentoHorizontal + Constantes.LARGURA_CARTA) : x;
 			y = espacamentoVertical > 0 ? (y + espacamentoVertical) : y;

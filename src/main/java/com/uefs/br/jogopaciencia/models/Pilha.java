@@ -159,7 +159,13 @@ public class Pilha {
 			return;
 		}
 		
-		if(!regraAdicao.permitir(cartas.peek(), subpilha.get(0)))
+		NoCarta ultimaCarta = null;
+		
+		if(!cartas.isEmpty())
+			ultimaCarta = cartas.peek();
+
+
+		if(!regraAdicao.permitir(ultimaCarta, subpilha.get(0)))
 			throw new Exception("Movimento inválido. Insercao não permitida!!!");
 		
 		int indiceDaCarta = 0;
