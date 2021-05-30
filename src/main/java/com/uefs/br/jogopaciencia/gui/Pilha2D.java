@@ -124,6 +124,7 @@ public class Pilha2D extends JPanel {
 	
 	private void cliqueCarta(ImagemPanel painelCarta, NoCarta carta){
 		faixaSelecao.adicionarIndice(pilha.getCartas().indexOf(carta));
+		pilha.setCartaSelecionada(pilha.getCartas().indexOf(carta));
 		
 		if(eventoSelecao != null)
 			eventoSelecao.selecaoFeita(faixaSelecao, pilha);
@@ -157,6 +158,10 @@ public class Pilha2D extends JPanel {
 		for(int i = 0; i <= paineisDeCartas.size() - 1; i++) {
 			paineisDeCartas.get(i).setEstaSelecionado(valor && (i >= inicio && i <=fim));
 		}
+	}
+
+	public Pilha getPilha(){
+		return this.pilha;
 	}
 
 	public void setEventoSelecao(SelecaoEvento eventoSelecao) {

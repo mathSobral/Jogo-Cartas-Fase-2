@@ -162,19 +162,25 @@ public class BigBertha extends JFrame {
 						
 						pilhasGUI[pilhaOrigem - 1].resetarExibicao();
 						pilhasGUI[pilhaDestino - 1].resetarExibicao();
-						
-						
+
+
 						if(quantidade > 1)
 							jogo.moverCarta(pilhaOrigem, quantidade, pilhaDestino);
-						else
+						else{
 							jogo.moverCarta(pilhaOrigem, pilhaDestino);
-						
+
+						}
+
 						
 						pilhasGUI[pilhaOrigem - 1].atualizarExibicao();;
 						pilhasGUI[pilhaDestino - 1].atualizarExibicao();
+						verificaFimJogo();
+
+
+
 					} 
 					catch (Exception e) {
-						exibirMensagem(e.getMessage());
+						exibirMensagem(e.getMessage(),false);
 					}
 				}
 			}
@@ -182,15 +188,31 @@ public class BigBertha extends JFrame {
 		});
 	}
 
-	private void exibirMensagem(String mensagem) {
+	private void verificaFimJogo(){
+		int soma = 0;
+		for(Pilha2D pilha2d : pilhasGUI){
+			if(pilha2d.getPilha().getNumero() > 1 &&  pilha2d.getPilha().getNumero() < 11){
+				soma+= pilha2d.getPilha().getCartas().size();
+			}
+		}
+		if(soma == 104){
+			exibirMensagem("Parabéns, você ganhou o jogo!",true);
+		}
+
+	}
+
+	private void exibirMensagem(String mensagem, boolean fim) {
 		lblMensagem.setText(mensagem);
 		lblMensagem.setVisible(true);
-		int delay = 3000; //milliseconds
-		ActionListener taskPerformer = new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				lblMensagem.setVisible(false);
-			}
-		};
-		new javax.swing.Timer(delay, taskPerformer).start();
+		if(! fim){
+			int delay = 3000; //milliseconds
+			ActionListener taskPerformer = new ActionListener() {
+				public void actionPerformed(ActionEvent evt) {
+					lblMensagem.setVisible(false);
+				}
+			};
+			new javax.swing.Timer(delay, taskPerformer).start();
+		}
+
 	}
 }

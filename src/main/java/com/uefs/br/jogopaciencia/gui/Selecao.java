@@ -3,7 +3,7 @@ package com.uefs.br.jogopaciencia.gui;
 public class Selecao {
 	private int inicio;
 	private int fim;
-	
+
 	public Selecao() {
 		resetar();
 	}
@@ -24,8 +24,9 @@ public class Selecao {
 	public void setFim(int fim) {
 		this.fim = fim;
 	}
-	
+
 	public void adicionarIndice(int indice) {
+
 		if(inicio == -1) {
 			inicio = indice;
 			fim = indice;

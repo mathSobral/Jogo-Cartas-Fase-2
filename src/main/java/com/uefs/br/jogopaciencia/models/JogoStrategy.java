@@ -31,10 +31,15 @@ public abstract class JogoStrategy {
 		
 		Pilha pilhaOrigem = getPilha(numPilhaOrigem);
 		Pilha pilhaDestino = getPilha(numPilhaDestino);
+		if(numPilhaOrigem == 1){
+			pilhaDestino.adicionarCarta(pilhaOrigem.getCartas().get(pilhaOrigem.getCartaSelecionada()));
+			pilhaOrigem.removerCartaIndex(pilhaOrigem.getCartaSelecionada());
+		}else{
+			pilhaDestino.adicionarCarta(pilhaOrigem.espiar());
+			pilhaOrigem.desempilhar();
+		}
 		
-		pilhaDestino.adicionarCarta(pilhaOrigem.espiar());
-		
-		pilhaOrigem.desempilhar();
+
 	}
 	
 	public void moverCarta(int numPilhaOrigem, int quantidade, int numPilhaDestino) throws Exception {

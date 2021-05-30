@@ -10,6 +10,7 @@ public class Pilha {
 	private int numero;
 	private RegraAdicao regraAdicao;
 	private String nome;
+	private int cartaSelecionada;
 
 	public Pilha() {
 		cartas = new Stack<NoCarta>();
@@ -54,6 +55,10 @@ public class Pilha {
 		cartas.add(index, carta);
 	}
 
+	public void removerCartaIndex(int index){
+		cartas.remove(index);
+	}
+
 	public void adicionarCartaSemVerificacao(NoCarta carta){
 		if(carta == null)
 			return;
@@ -78,6 +83,8 @@ public class Pilha {
 		
 		return cartaDesempilhada;
 	}
+
+
 
 	/**
 	 * Método que oserva sem remover a carta do topo da pilha
@@ -135,6 +142,14 @@ public class Pilha {
 		int fromIndex = cartas.size() - quantidade;
 		int toIndex = cartas.size();
 		return cartas.subList(fromIndex, toIndex);
+	}
+
+	public void setCartaSelecionada(int carta){
+		this.cartaSelecionada = carta;
+	}
+
+	public int getCartaSelecionada(){
+		return this.cartaSelecionada;
 	}
 
 
