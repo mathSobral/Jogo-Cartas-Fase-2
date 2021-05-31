@@ -6,10 +6,7 @@
 package com.uefs.br.jogopaciencia.main;
 
 import com.uefs.br.jogopaciencia.facade.PacienciaFacade;
-import com.uefs.br.jogopaciencia.models.JogoStrategy;
-import com.uefs.br.jogopaciencia.models.PacienciaBigBertha;
 import com.uefs.br.jogopaciencia.util.Console;
-import java.io.IOException;
 
 
 /**
@@ -77,40 +74,12 @@ public class Paciencia {
 		}
 
 		else if(menu == 2) {
-			JogoStrategy jogo = new PacienciaBigBertha(); 
-			
-			jogo.novoJogo();
-
-			while(escolha !=5){
-
-				System.out.println("\nPara jogar, digite o número referente a opção que deseja realizar no jogo! - Permitido de 1 a 5");
-				System.out.println("Boa sorte!\n");
-				System.out.println("1 - MOVER CARTA");
-				System.out.println("2 - EXIBIR JOGO");
-				System.out.println("3 - ALTERAR QTDE DE CARTAS A VIRAR DO ESTOQUE");
-				System.out.println("4 - REINICIAR");
-				System.out.println("5 - FINALIZAR");
-				escolha = Console.readInt();
-
-				try {
-					if(escolha == 1){
-						System.out.println("\nInforme o numero do local onde a carta se encontra: ");
-						int numPilhaOrigem = Console.readInt();
-						System.out.println("Informe o numero do local para onde deseja mover a carta: ");
-						int numPilhaDestino = Console.readInt();
-						jogo.moverCarta(numPilhaOrigem, 0, numPilhaDestino);
-					}else if(escolha == 2){
-						jogo.mostrarJogo();
-					}else if(escolha == 3){
-
-					}else if(escolha == 4){
-						jogo.novoJogo();
-					}
-				}
-				catch(Exception e) {
-					System.out.println(e.getMessage());
-				}
-			} 
+			try {
+				BigBertha frame = new BigBertha();
+				frame.setVisible(true);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

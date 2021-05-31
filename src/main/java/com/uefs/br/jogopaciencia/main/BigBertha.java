@@ -1,6 +1,5 @@
 package com.uefs.br.jogopaciencia.main;
 
-import java.awt.EventQueue;
 import java.io.File;
 
 import javax.swing.JFrame;
@@ -39,22 +38,6 @@ public class BigBertha extends JFrame {
 	private Pilha2D[] pilhasGUI;
 	private Movimento proximoMovimento;
 	private JLabel lblMensagem;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					BigBertha frame = new BigBertha();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
