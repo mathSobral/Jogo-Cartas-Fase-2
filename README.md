@@ -2,6 +2,7 @@
 Implementação do jogo paciência Big Bertha feita em Java utilizando swing.
 
 ![Tela de exibição de jogo](assets/jogo_em_execucao.JPG "Tela de exibição de jogo")
+[Demo.](https://youtu.be/C7Lvn5a0s08)
 
 ## O jogo
 
