@@ -6,27 +6,27 @@ import java.util.Stack;
 import com.uefs.br.jogopaciencia.interfaces.RegraAdicao;
 
 public class Pilha {
-	private Stack<NoCarta> cartas;
+	private Stack<Carta> cartas;
 	private int numero;
 	private RegraAdicao regraAdicao;
 	private String nome;
 	private int cartaSelecionada;
 
 	public Pilha() {
-		cartas = new Stack<NoCarta>();
+		cartas = new Stack<Carta>();
 	}
 	
 
 	public Pilha(int numero, String nome) {
 		this.numero = numero;
 		this.nome = nome;
-		cartas = new Stack<NoCarta>();
+		cartas = new Stack<Carta>();
 	}
 
 	public Pilha(int numero, RegraAdicao eventoAdicao) {
 		this.numero = numero;
 		this.regraAdicao = eventoAdicao;
-		cartas = new Stack<NoCarta>();
+		cartas = new Stack<Carta>();
 	}
 
 	/**
@@ -35,12 +35,12 @@ public class Pilha {
 	 * @param novaCarta
 	 * @throws Exception
 	 */
-	public void adicionarCarta(NoCarta novaCarta) throws Exception {
+	public void adicionarCarta(Carta novaCarta) throws Exception {
 		if(novaCarta == null)
 			return;
 		
 		if(regraAdicao != null){
-				NoCarta cartaAnterior =  cartas.isEmpty() ? null : cartas.peek();
+				Carta cartaAnterior =  cartas.isEmpty() ? null : cartas.peek();
 				
 				if(!regraAdicao.permitir(cartaAnterior, novaCarta))
 					throw new Exception("Movimento inválido. Insercao não permitida!!!");
@@ -49,7 +49,7 @@ public class Pilha {
 		cartas.push(novaCarta);
 	}
 
-	public void adicionarCarta(int index, NoCarta carta)  {
+	public void adicionarCarta(int index, Carta carta)  {
 		if(carta == null)
 			return;
 		cartas.add(index, carta);
@@ -59,7 +59,7 @@ public class Pilha {
 		cartas.remove(index);
 	}
 
-	public void adicionarCartaSemVerificacao(NoCarta carta){
+	public void adicionarCartaSemVerificacao(Carta carta){
 		if(carta == null)
 			return;
 		cartas.push(carta);
@@ -69,17 +69,17 @@ public class Pilha {
 		return cartas.size();
 	}
 	
-	public NoCarta removerCarta(int index) {
+	public Carta removerCarta(int index) {
 		return cartas.remove(index);
 	}
 	
 
-	public NoCarta desempilhar() throws Exception {
+	public Carta desempilhar() throws Exception {
 		if(cartas.isEmpty())
 			throw new Exception("Pilha "+ (numero + 1) + " vazia!");
 		
 
-		NoCarta cartaDesempilhada = cartas.pop();
+		Carta cartaDesempilhada = cartas.pop();
 		
 		return cartaDesempilhada;
 	}
@@ -91,7 +91,7 @@ public class Pilha {
 	 * @return
 	 * @throws Exception
 	 */
-	public NoCarta espiar() throws Exception {
+	public Carta espiar() throws Exception {
 		if(cartas.isEmpty())
 			throw new Exception("Pilha "+ (numero + 1) + " vazia!");
 		
@@ -103,14 +103,14 @@ public class Pilha {
 			quantidade = cartas.size();
 
 		for(int i = 1; i <= quantidade; i++) {
-			NoCarta carta = cartas.get(cartas.size() - i);
+			Carta carta = cartas.get(cartas.size() - i);
 			if(carta.estaViradaParaBaixo())
 				carta.virar();
 		}
 	}
 	
 	
-	public Stack<NoCarta> getCartas(){
+	public Stack<Carta> getCartas(){
 		return cartas;
 	}
 
@@ -126,7 +126,7 @@ public class Pilha {
 	public String toString() {
 		String cartasString = nome + " - " + numero + " ";
 
-		for(NoCarta carta : cartas)
+		for(Carta carta : cartas)
 			cartasString += carta.toString();
 
 		return cartasString;
@@ -138,7 +138,7 @@ public class Pilha {
 	}
 
 
-	public List<NoCarta> getSubpilha(int quantidade) {
+	public List<Carta> getSubpilha(int quantidade) {
 		int fromIndex = cartas.size() - quantidade;
 		int toIndex = cartas.size();
 		return cartas.subList(fromIndex, toIndex);
@@ -153,13 +153,13 @@ public class Pilha {
 	}
 
 
-	public void adicionarSubpilha(List<NoCarta> subpilha) throws Exception {
+	public void adicionarSubpilha(List<Carta> subpilha) throws Exception {
 		if(subpilha.size() == 1) {
 			adicionarCarta(subpilha.get(0));
 			return;
 		}
 		
-		NoCarta ultimaCarta = null;
+		Carta ultimaCarta = null;
 		
 		if(!cartas.isEmpty())
 			ultimaCarta = cartas.peek();
@@ -170,7 +170,7 @@ public class Pilha {
 		
 		int indiceDaCarta = 0;
 		
-		for(NoCarta carta: subpilha.subList(1, subpilha.size()))
+		for(Carta carta: subpilha.subList(1, subpilha.size()))
 				if(!regraAdicao.permitir(subpilha.get(indiceDaCarta++), carta))
 					throw new Exception("Movimento inválido. Insercao não permitida!!!");
 		

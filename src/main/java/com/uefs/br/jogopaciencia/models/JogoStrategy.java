@@ -49,7 +49,7 @@ public abstract class JogoStrategy {
 		Pilha pilhaOrigem = getPilha(numPilhaOrigem);
 		Pilha pilhaDestino = getPilha(numPilhaDestino);
 		
-		List<NoCarta> subpilha = pilhaOrigem.getSubpilha(quantidade);
+		List<Carta> subpilha = pilhaOrigem.getSubpilha(quantidade);
 		int tamanhoSubpilha = subpilha.size();
 		
 		try {
@@ -76,7 +76,7 @@ public abstract class JogoStrategy {
 	
 	protected abstract int converterParaIndiceArray(int indiceContante);
 	
-	public abstract void parabenizar();
+	public abstract boolean terminou();
 	
 	public void encerrarPrograma() {
 		System.out.println("Jogo finalizado! Volte sempre");

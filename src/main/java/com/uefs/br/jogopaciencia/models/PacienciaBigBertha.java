@@ -1,5 +1,7 @@
 package com.uefs.br.jogopaciencia.models;
 
+import com.uefs.br.jogopaciencia.gui.Pilha2D;
+
 public class PacienciaBigBertha extends JogoStrategy {
 
 	public static int ESTOQUE = 1;
@@ -34,9 +36,9 @@ public class PacienciaBigBertha extends JogoStrategy {
 
 
 		for(int i = 0; i < 14; i++)
-			pilhaEstoque.adicionarCarta(baralho.retiraCartaTopo());
+			pilhaEstoque.adicionarCarta(baralho.getCarta());
 
-		pilhaEstoque.setRegraAdicao((NoCarta cartaAnterior, NoCarta novaCarta) -> {return false;});
+		pilhaEstoque.setRegraAdicao((Carta cartaAnterior, Carta novaCarta) -> {return false;});
 
 		pilhas[converterParaIndiceArray(ESTOQUE)] = pilhaEstoque;
 	}
@@ -45,9 +47,9 @@ public class PacienciaBigBertha extends JogoStrategy {
 		for(int i = 0; i < 8; i++) {
 			Pilha pilhaFundacao = new Pilha(FUNDACAO_1 + i, "FUNDACAO");
 
-			pilhaFundacao.setRegraAdicao((NoCarta cartaAnterior, NoCarta novaCarta) -> {
+			pilhaFundacao.setRegraAdicao((Carta cartaAnterior, Carta novaCarta) -> {
 				if(cartaAnterior != null) {
-					if(!cartaAnterior.getNaipe().getNaipe().equals(novaCarta.getNaipe().getNaipe()))
+					if(!cartaAnterior.getNaipe().equals(novaCarta.getNaipe()))
 						return false;
 
 					if( novaCarta.getNumero() - cartaAnterior.getNumero() != 1)
@@ -68,7 +70,7 @@ public class PacienciaBigBertha extends JogoStrategy {
 	private void criarFundacoesSoReis() {
 		Pilha pilhaFundacaoSoReis = new Pilha(FUNDACAO_9_REIS, "FUNDACAO (SO REIS)");
 		
-		pilhaFundacaoSoReis.setRegraAdicao((NoCarta cartaAnterior, NoCarta novaCarta) -> {
+		pilhaFundacaoSoReis.setRegraAdicao((Carta cartaAnterior, Carta novaCarta) -> {
 			return novaCarta.eReis();
 		});
 		
@@ -82,11 +84,11 @@ public class PacienciaBigBertha extends JogoStrategy {
 			Pilha pilhaFileira = new Pilha(FILEIRA_1 + i, "FILEIRA");
 
 			for(int j = 0; j < 6; j++)
-				pilhaFileira.adicionarCarta(baralho.retiraCartaTopo());
+				pilhaFileira.adicionarCarta(baralho.getCarta());
 
-			pilhaFileira.setRegraAdicao((NoCarta cartaAnterior, NoCarta novaCarta) -> {
+			pilhaFileira.setRegraAdicao((Carta cartaAnterior, Carta novaCarta) -> {
 				if(cartaAnterior != null) {
-					if(cartaAnterior.getNaipe().getCor().equals(novaCarta.getNaipe().getCor()))
+					if(cartaAnterior.getCor().equals(novaCarta.getCor()))
 						return false;
 
 					if(cartaAnterior.getNumero() - novaCarta.getNumero() != 1)
@@ -127,9 +129,14 @@ public class PacienciaBigBertha extends JogoStrategy {
 	}
 
 	@Override
-	public void parabenizar() {
-		// TODO Auto-generated method stub
+	public boolean terminou() {
+		int quantidadeCartasNasFundacoes = 0;
+		
+		for(int pilha = FUNDACAO_1; pilha <= FUNDACAO_9_REIS; pilha++){
+			quantidadeCartasNasFundacoes += pilhas[converterParaIndiceArray(pilha)].tamanho();
+		}
 
+		return quantidadeCartasNasFundacoes == 104;
 	}
 
 }

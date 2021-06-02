@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
-import com.uefs.br.jogopaciencia.models.NoCarta;
+import com.uefs.br.jogopaciencia.models.Carta;
 import com.uefs.br.jogopaciencia.models.Pilha;
 
 public class Pilha2D extends JPanel {
@@ -92,7 +92,7 @@ public class Pilha2D extends JPanel {
 		int y = 0;
 		int posicalDaCarta = 0;
 
-		for(NoCarta carta : pilha.getCartas()) {
+		for(Carta carta : pilha.getCartas()) {
 			ImagemPanel painelCarta = new ImagemPanel(spriteCartas.getImage(carta.getNaipeInteiro(), carta.getNumero() - 1), 
 													  spriteCartas.getImageSelecionado(carta.getNaipeInteiro(), carta.getNumero() - 1));
 			
@@ -126,7 +126,7 @@ public class Pilha2D extends JPanel {
 		this.repaint();
 	}
 	
-	private void cliqueCarta(ImagemPanel painelCarta, NoCarta carta){
+	private void cliqueCarta(ImagemPanel painelCarta, Carta carta){
 		faixaSelecao.adicionarIndice(pilha.getCartas().indexOf(carta));
 		pilha.setCartaSelecionada(pilha.getCartas().indexOf(carta));
 		

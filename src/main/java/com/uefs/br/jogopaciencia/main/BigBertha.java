@@ -132,7 +132,7 @@ public class BigBertha extends JFrame {
 			@Override
 			public void selecaoFeita(Selecao selecao, Pilha pilha) {
 				proximoMovimento.adicionarPilha(pilha.getNumero(), selecao.getNumeroDeItensSelecionados());
-				
+
 				if(proximoMovimento.movimentoFormado()) {
 					try {
 						int pilhaOrigem = proximoMovimento.getPilhaOrigem();
@@ -140,7 +140,7 @@ public class BigBertha extends JFrame {
 						int pilhaDestino = proximoMovimento.getPilhaDestino();
 
 						proximoMovimento.resetar();
-						
+
 						pilhasGUI[pilhaOrigem - 1].resetarExibicao();
 						pilhasGUI[pilhaDestino - 1].resetarExibicao();
 
@@ -152,7 +152,7 @@ public class BigBertha extends JFrame {
 
 						}
 
-						
+
 						pilhasGUI[pilhaOrigem - 1].atualizarExibicao();;
 						pilhasGUI[pilhaDestino - 1].atualizarExibicao();
 						verificaFimJogo();
@@ -170,16 +170,8 @@ public class BigBertha extends JFrame {
 	}
 
 	private void verificaFimJogo(){
-		int soma = 0;
-		for(Pilha2D pilha2d : pilhasGUI){
-			if(pilha2d.getPilha().getNumero() > 1 &&  pilha2d.getPilha().getNumero() < 11){
-				soma+= pilha2d.getPilha().getCartas().size();
-			}
-		}
-		if(soma == 104){
+		if(jogo.terminou())
 			exibirMensagem("Parabéns, você ganhou o jogo!",true);
-		}
-
 	}
 
 	private void exibirMensagem(String mensagem, boolean fim) {

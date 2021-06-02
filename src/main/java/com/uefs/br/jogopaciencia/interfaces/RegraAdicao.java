@@ -1,7 +1,7 @@
 package com.uefs.br.jogopaciencia.interfaces;
 
-import com.uefs.br.jogopaciencia.models.NoCarta;
+import com.uefs.br.jogopaciencia.models.Carta;
 
 public interface RegraAdicao {
-	public boolean permitir(NoCarta cartaAnterior, NoCarta novaCarta);
+	public boolean permitir(Carta cartaAnterior, Carta novaCarta);
 }
